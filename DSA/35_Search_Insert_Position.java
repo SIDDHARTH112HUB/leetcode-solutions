@@ -1,3 +1,5 @@
+package DSA;
+
 //Find the position in array where
 //target value is present or if not present 
 // then the position where it can be inserted in sorted order
