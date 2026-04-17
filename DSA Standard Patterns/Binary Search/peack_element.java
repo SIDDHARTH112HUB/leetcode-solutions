@@ -1,4 +1,3 @@
-package DSA;
 
 class Solution {
     public int findPeakElement(int[] arr) {
