@@ -62,7 +62,7 @@ public class Solution {
 }
 
 
-public class Solution {
+public class Solution1 {
     public boolean searchMatrix(int[][] matrix, int target) {
         int ROWS = matrix.length, COLS = matrix[0].length;
 
