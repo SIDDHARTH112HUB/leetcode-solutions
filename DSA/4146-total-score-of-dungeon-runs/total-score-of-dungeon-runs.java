@@ -1,40 +1,48 @@
 import java.util.*;
 
 class Solution {
-    public long totalScore(int hp, int[] damage, int[] requirement) {
+    public long totalScore(int initialHealth, int[] damage, int[] requirement) {
         int n = damage.length;
-        long ans = 0;
+        long totalScore = 0;
 
-        // prefix sums
-        long[] pref = new long[n + 1];
-        long s = 0;
+        // Build prefix sums of damage
+        long[] prefixDamage = new long[n + 1];
+        long cumulativeDamage = 0;
         for (int i = 0; i < n; i++) {
-            s += damage[i];
-            pref[i + 1] = s;
+            cumulativeDamage += damage[i];
+            prefixDamage[i + 1] = cumulativeDamage;
         }
 
-        for (int i = 0; i < n; i++) {
-            long t = pref[i + 1] + requirement[i] - hp;
-            int ip = lowerBound(pref, t);
-            if (ip <= i) {
-                ans += (i - ip + 1);
+        // For each room, calculate how many starting points are valid
+        for (int roomIndex = 0; roomIndex < n; roomIndex++) {
+            // Threshold health needed before entering this room
+            long requiredPrefix = prefixDamage[roomIndex + 1] 
+                                + requirement[roomIndex] 
+                                - initialHealth;
+
+            // Find the smallest prefix index where prefixDamage >= requiredPrefix
+            int startIndex = lowerBound(prefixDamage, requiredPrefix);
+
+            // Only count valid starts that are before or at this room
+            if (startIndex <= roomIndex) {
+                totalScore += (roomIndex - startIndex + 1);
             }
         }
 
-        return ans;
+        return totalScore;
     }
 
-    // Java version of C++ lower_bound
+    // Equivalent of C++ lower_bound
     private int lowerBound(long[] arr, long target) {
-        int lo = 0, hi = arr.length;
-        while (lo < hi) {
-            int mid = (lo + hi) >>> 1;
+        int low = 0, high = arr.length;
+        while (low < high) {
+            int mid = (low + high) >>> 1;
             if (arr[mid] < target) {
-                lo = mid + 1;
+                low = mid + 1;
             } else {
-                hi = mid;
+                high = mid;
             }
         }
-        return lo;
+        return low;
     }
 }
