@@ -17,12 +17,13 @@ class Solution {
         }
         return ans;
     }
-    boolean isValid(int []p, int b, int h){
-        long a=0;
-        for(int i=0;i<p.length;i++){
-            a+=p[i]/b;
-            a+=p[i]%b==0?0:1;
+    boolean isValid(int []piles, int k, int h){
+        long hours = 0;
+        
+        for (int p : piles) {
+            hours += (p + k - 1) / k;  // ceil
         }
-        return a<=h;
+        
+        return hours <= h;
     }
 }
