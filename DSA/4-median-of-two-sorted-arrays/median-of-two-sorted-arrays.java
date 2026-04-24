@@ -1,40 +1,25 @@
 class Solution {
     public double findMedianSortedArrays(int[] nums1, int[] nums2) {
-        int i=0;
-        int n1=nums1.length;
-        int n2 =nums2.length;
-        int []f = new int[n1+n2];
-        int j=0,k=0;
-        while(j<n1 && k<n2){
-            if(nums1[j]<nums2[k]){
-                f[i]=nums1[j];
-                i++;
-                j++;
+        int n1 = nums1.length, n2 = nums2.length;
+        int total = n1 + n2;
+        int mid1 = (total - 1) / 2, mid2 = total / 2;
+
+        int i = 0, j = 0, count = 0;
+        int val1 = 0, val2 = 0;
+
+        while (count <= mid2) {
+            int val;
+            if (i < n1 && (j >= n2 || nums1[i] <= nums2[j])) {
+                val = nums1[i++];
+            } else {
+                val = nums2[j++];
             }
-            else{
-                f[i]=nums2[k];
-                i++;
-                k++;
-            }
-        } 
-        while(j<n1){
-            f[i]=nums1[j];
-                i++;
-                j++;
-        } 
-        while(k<n2){
-            
-                f[i]=nums2[k];
-                i++;
-                k++;
-        } 
-        int n =n1+n2;
-        if (n % 2 != 0) {
-            // Odd length: middle element
-            return f[n / 2];
-        } else {
-            // Even length: average of two middle elements
-            return (f[(n / 2) - 1] + f[n / 2]) / 2.0;
+
+            if (count == mid1) val1 = val;
+            if (count == mid2) val2 = val;
+            count++;
         }
+
+        return (val1 + val2) / 2.0;
     }
 }
