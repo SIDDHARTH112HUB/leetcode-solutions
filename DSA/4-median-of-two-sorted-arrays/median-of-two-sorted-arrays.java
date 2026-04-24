@@ -1,25 +1,32 @@
 class Solution {
-    public double findMedianSortedArrays(int[] nums1, int[] nums2) {
-        int n1 = nums1.length, n2 = nums2.length;
-        int total = n1 + n2;
-        int mid1 = (total - 1) / 2, mid2 = total / 2;
+    public double findMedianSortedArrays(int[] A, int[] B) {
+        if (A.length > B.length) return findMedianSortedArrays(B, A);
 
-        int i = 0, j = 0, count = 0;
-        int val1 = 0, val2 = 0;
+        int m = A.length, n = B.length;
+        int low = 0, high = m;
 
-        while (count <= mid2) {
-            int val;
-            if (i < n1 && (j >= n2 || nums1[i] <= nums2[j])) {
-                val = nums1[i++];
+        while (low <= high) {
+            int partitionA = (low + high) / 2;
+            int partitionB = (m + n + 1) / 2 - partitionA;
+
+            int maxLeftA = (partitionA == 0) ? Integer.MIN_VALUE : A[partitionA - 1];
+            int minRightA = (partitionA == m) ? Integer.MAX_VALUE : A[partitionA];
+
+            int maxLeftB = (partitionB == 0) ? Integer.MIN_VALUE : B[partitionB - 1];
+            int minRightB = (partitionB == n) ? Integer.MAX_VALUE : B[partitionB];
+
+            if (maxLeftA <= minRightB && maxLeftB <= minRightA) {
+                if ((m + n) % 2 == 0) {
+                    return (Math.max(maxLeftA, maxLeftB) + Math.min(minRightA, minRightB)) / 2.0;
+                } else {
+                    return Math.max(maxLeftA, maxLeftB);
+                }
+            } else if (maxLeftA > minRightB) {
+                high = partitionA - 1;
             } else {
-                val = nums2[j++];
+                low = partitionA + 1;
             }
-
-            if (count == mid1) val1 = val;
-            if (count == mid2) val2 = val;
-            count++;
         }
-
-        return (val1 + val2) / 2.0;
+        return 0;
     }
 }
