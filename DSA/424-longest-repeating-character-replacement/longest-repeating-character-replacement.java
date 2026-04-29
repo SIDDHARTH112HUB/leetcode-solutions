@@ -1,6 +1,6 @@
 class Solution {
       // M1 
-    public int characterReplacement(String s, int k) {
+    public int characterReplacement1(String s, int k) {
         Map<Character,Integer> temp = new HashMap<>();
         int ans=0;
         int i=0,j=0;
@@ -29,7 +29,7 @@ class Solution {
     }
 
     //M2 
-    public int characterReplacement1(String s, int k) {
+    public int characterReplacement(String s, int k) {
         int[] count = new int[26];
 
         int left = 0;
