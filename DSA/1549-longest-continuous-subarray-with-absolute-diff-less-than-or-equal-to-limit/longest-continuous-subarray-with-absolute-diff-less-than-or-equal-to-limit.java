@@ -15,7 +15,7 @@ class Solution {
         }
         return ans;
     }
-    public int longestSubarray(int[] nums, int limit) {
+    public int longestSubarray2(int[] nums, int limit) {
         TreeMap<Integer, Integer> map = new TreeMap<>();
         int i = 0, j = 0, ans = 0;
 
@@ -39,6 +39,39 @@ class Solution {
             // 3. Update the maximum length found so far
             ans = Math.max(ans, j - i + 1);
             j++; // Expand window
+        }
+        return ans;
+    }
+    public int longestSubarray(int[] nums, int limit) {
+        // Deques to store indices of elements
+        Deque<Integer> maxDeque = new ArrayDeque<>();
+        Deque<Integer> minDeque = new ArrayDeque<>();
+        
+        int i = 0, j = 0, ans = 0;
+
+        while (j < nums.length) {
+            // Maintain maxDeque: remove elements smaller than current from the back
+            while (!maxDeque.isEmpty() && nums[maxDeque.peekLast()] <= nums[j]) {
+                maxDeque.pollLast();
+            }
+            maxDeque.addLast(j);
+
+            // Maintain minDeque: remove elements larger than current from the back
+            while (!minDeque.isEmpty() && nums[minDeque.peekLast()] >= nums[j]) {
+                minDeque.pollLast();
+            }
+            minDeque.addLast(j);
+
+            // If the current window violates the limit
+            while (nums[maxDeque.peekFirst()] - nums[minDeque.peekFirst()] > limit) {
+                // If the element at i is the current max or min, pop it from the front
+                if (maxDeque.peekFirst() == i) maxDeque.pollFirst();
+                if (minDeque.peekFirst() == i) minDeque.pollFirst();
+                i++; // Shrink the window
+            }
+
+            ans = Math.max(ans, j - i + 1);
+            j++;
         }
         return ans;
     }
