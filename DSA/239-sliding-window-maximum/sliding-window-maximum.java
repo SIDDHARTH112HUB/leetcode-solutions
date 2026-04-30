@@ -1,5 +1,5 @@
 class Solution {
-    public int[] maxSlidingWindow(int[] nums, int k) {
+    public int[] maxSlidingWindow1(int[] nums, int k) {
         // write code here
         int i=0,j=0;
         int imax=0,jmax=0, max=Integer.MIN_VALUE;
@@ -20,5 +20,24 @@ class Solution {
                                       .toArray();
         return numberArray;
         
+    }
+    public int[] maxSlidingWindow(int[] nums, int k) {
+        Deque<Integer> dq= new ArrayDeque<>();
+        int [] res= new int[nums.length-k+1];
+        for(int i=0; i<k; i++){
+            while (!dq.isEmpty() && nums[dq.peekLast()] <= nums[i])
+                dq.pollLast();
+            dq.offerLast(i);
+        };
+            res[0]=nums[dq.peekFirst()];
+        for(int i=k; i<nums.length; i++){
+            while (!dq.isEmpty() && nums[dq.peekLast()] <= nums[i])
+                dq.pollLast();
+            dq.offerLast(i);
+            if (dq.peekFirst() < i - k + 1)
+                dq.pollFirst();
+            res[i-k+1]=nums[dq.peekFirst()];
+        }
+        return res;
     }
 }
