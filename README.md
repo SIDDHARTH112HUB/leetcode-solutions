@@ -13,4 +13,8 @@
 |  |
 | ------- |
 | [1095-find-in-mountain-array](https://github.com/SIDDHARTH112HUB/leetcode-solutions/tree/master/1095-find-in-mountain-array) |
+## Math
+|  |
+| ------- |
+| [0009-palindrome-number](https://github.com/SIDDHARTH112HUB/leetcode-solutions/tree/master/0009-palindrome-number) |
 <!---LeetCode Topics End-->
