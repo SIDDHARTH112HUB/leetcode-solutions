@@ -1,5 +1,5 @@
 class Solution {
-    public int numberOfSubstrings1(String s) {
+    public int numberOfSubstrings(String s) {
         int len = s.length();
         int left = 0, right = 0;
         // Track frequency of a, b, c
@@ -33,7 +33,7 @@ class Solution {
         // Check if we have at least one of each character
         return freq[0] > 0 && freq[1] > 0 && freq[2] > 0;
     }
-    public int numberOfSubstrings(String s) {
+    public int numberOfSubstrings1(String s) {
         int len = s.length();
         // Track last position of a, b, c
         int[] lastPos = { -1, -1, -1 };
