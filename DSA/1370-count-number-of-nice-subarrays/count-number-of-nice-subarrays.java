@@ -1,16 +1,20 @@
 class Solution {
     public int numberOfSubarrays(int[] nums, int k) {
-        Queue<Integer> q = new LinkedList<>();
+        int count=0;
+        List<Integer> q = new ArrayList<>();
         int i=0,j=0,ans=0;
         while(j<nums.length){
             if(nums[j]%2==1)
-            q.add(j);
-            while(q.size()>k){
-                i=q.poll()+1;
-                
+            {   
+                q.add(j);
+                count++;
             }
-            if(q.size()==k){
-                ans+=q.peek()-i+1;
+            if(count>k){
+                i=q.get(q.size()-count)+1;
+                count--;
+            }
+            if(count==k){
+                ans+=q.get(q.size()-count)-i+1;
             }
             j++;
 
