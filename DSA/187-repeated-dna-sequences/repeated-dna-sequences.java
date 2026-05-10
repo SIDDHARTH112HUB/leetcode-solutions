@@ -16,6 +16,9 @@ class Solution {
         map['C' - 'A'] = 1;
         map['G' - 'A'] = 2;
         map['T' - 'A'] = 3;
+        //each charecter is considered as a 2 bit value 00, 01, 10, 11 so instead of storing 80 bit (8 bit per character)
+        // we are storing 20 bit( 2 bit per character- 1 32 bit Integer is enough) so complexity wise its same
+        // but is little faster as size reduced drastically
         Set<String> tmp = new HashSet<>();
 
         for(int i = 9; i < s.length(); i++) {
