@@ -1,5 +1,5 @@
 class Solution {
-    public int oddCells(int m, int n, int[][] indices) {
+    public int oddCells1(int m, int n, int[][] indices) {
         Map<Integer,Integer> rows = new HashMap<>();
         Map<Integer,Integer> cols = new HashMap<>();
         for(int[]d: indices){
@@ -26,6 +26,32 @@ class Solution {
             else
             codd++;
         }
+        int ans = rodd * (n - codd) + (m - rodd) * codd;
+        return ans;
+    }
+    public int oddCells(int m, int n, int[][] indices) {
+        Map<Integer,Integer> rows = new HashMap<>();
+        Map<Integer,Integer> cols = new HashMap<>();
+        
+        // Count increments for each row and column
+        for(int[] d: indices){
+            rows.merge(d[0], 1, Integer::sum);
+            cols.merge(d[1], 1, Integer::sum);
+        }
+
+        // Count odd rows
+        int rodd = 0;
+        for (int i = 0; i < m; i++) {
+            if (rows.getOrDefault(i, 0) % 2 != 0) rodd++;
+        }
+
+        // Count odd cols
+        int codd = 0;
+        for (int j = 0; j < n; j++) {
+            if (cols.getOrDefault(j, 0) % 2 != 0) codd++;
+        }
+
+        // Correct formula: odd cells = rodd*(n-codd) + (m-rodd)*codd
         int ans = rodd * (n - codd) + (m - rodd) * codd;
         return ans;
     }
