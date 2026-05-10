@@ -29,7 +29,7 @@ class Solution {
         int ans = rodd * (n - codd) + (m - rodd) * codd;
         return ans;
     }
-    public int oddCells(int m, int n, int[][] indices) {
+    public int oddCells2(int m, int n, int[][] indices) {
         Map<Integer,Integer> rows = new HashMap<>();
         Map<Integer,Integer> cols = new HashMap<>();
         
@@ -54,5 +54,21 @@ class Solution {
         // Correct formula: odd cells = rodd*(n-codd) + (m-rodd)*codd
         int ans = rodd * (n - codd) + (m - rodd) * codd;
         return ans;
+    }
+    public int oddCells(int m, int n, int[][] indices) {
+        int[] row = new int[m];
+        int[] col = new int[n];
+        for (int[] idx : indices) {
+            row[idx[0]]++;
+            col[idx[1]]++;
+        }
+        int oddrows=0,oddcols=0;
+        for(int r : row){
+            if(r%2!=0)oddrows++;
+        }
+        for(int c : col){
+            if(c%2!=0)oddcols++;
+        }
+        return oddrows * (n - oddcols) + (m - oddrows) * oddcols;
     }
 }
