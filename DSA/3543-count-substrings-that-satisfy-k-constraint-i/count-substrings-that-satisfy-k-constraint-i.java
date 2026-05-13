@@ -1,5 +1,5 @@
 class Solution {
-    public int countKConstraintSubstrings(String s, int k) {
+    public int countKConstraintSubstrings1(String s, int k) {
         int ans=0;
         for(int i=0;i<s.length();i++){
             for(int j=i;j<s.length();j++){
@@ -20,5 +20,24 @@ class Solution {
             count1++;
         }
         return count0<=k || count1<=k;
+    }
+    public int countKConstraintSubstrings(String s, int k) {
+        
+        int zeroes = 0;
+        int ones = 0;
+        int totalCount = 0;
+
+        for(int right = 0, left = 0; right < s.length(); right++){
+            if(s.charAt(right) == '0') zeroes++;
+            else ones++;
+
+            while(zeroes > k && ones > k){
+                if(s.charAt(left) == '0') zeroes--;
+                else ones--;
+                left++;
+            }
+            totalCount += right - left + 1;
+        }
+        return totalCount;
     }
 }
