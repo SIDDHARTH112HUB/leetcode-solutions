@@ -1,3 +1,5 @@
+import java.util.*;
+
 class BinaryTree {
     Node root;
 
@@ -26,6 +28,28 @@ class BinaryTree {
         printPostOrder(node.left);         // Traverse Left
         printPostOrder(node.right);        // Traverse Right
         System.out.print(node.data + " ");  // Visit Root
+    }
+    void printLevelOrder() {
+        if (root == null) return;
+
+        Queue<Node> queue = new LinkedList<>();
+        queue.add(root);
+
+        while (!queue.isEmpty()) {
+            // poll() removes the present head
+            Node tempNode = queue.poll();
+            System.out.print(tempNode.data + " ");
+
+            // Enqueue left child
+            if (tempNode.left != null) {
+                queue.add(tempNode.left);
+            }
+
+            // Enqueue right child
+            if (tempNode.right != null) {
+                queue.add(tempNode.right);
+            }
+        }
     }
 }
 class Node {
