@@ -41,9 +41,28 @@ class BinaryTree {
         }
     }
 
+    public List<Integer> postorderTraversal(Node root) {
+        Stack<Node> st1 = new Stack<>();
+        Stack<Node> st2 = new Stack<>();
+        List<Integer> ans = new ArrayList<>();
+        if (root == null) return ans;
+        st1.push(root);
+        while (!st1.isEmpty()) {
+            Node t = st1.pop();
+            st2.push(t);
+            if(t.left!=null) st1.push(t.left);
+            if(t.right!=null) st1.push(t.right);
+        }
+        while(!st2.isEmpty()){
+            ans.add(st2.peek().val);
+            st2.pop();
+        }
+        return ans;
+    }
+
     // 3. Post-order Traversal (Left -> Right -> Root)
     public void iterativePostOrder(Node root) {
-    Stack<Node> stack = new Stack<>();
+        Stack<Node> stack = new Stack<>();
         Node curr = root;
         Node lastVisited = null;
 
