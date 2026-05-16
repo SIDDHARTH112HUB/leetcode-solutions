@@ -1,0 +1,34 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    int sum =Integer.MIN_VALUE;
+    public int maxPathSum(TreeNode root) {
+        maxSum(root);
+        return sum;
+    }
+    private int maxSum(TreeNode node) {
+        if (node == null) return 0;
+
+        int left = Math.max(maxSum(node.left),0);
+        int right = Math.max(maxSum(node.right),0);
+
+        // Update diameter at this node
+        sum = Math.max(sum, node.val+left + right);
+
+        // Return height of this subtree
+        return node.val+ Math.max(left, right);
+    }
+}
