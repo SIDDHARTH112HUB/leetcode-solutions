@@ -14,7 +14,7 @@
  * }
  */
 class Solution {
-    public List<Integer> rightSideView(TreeNode root) {
+    public List<Integer> rightSideView1(TreeNode root) {
         ArrayList<Integer> ans = new ArrayList<>();
         Queue<TreeNode> q = new LinkedList<>();
         if(root==null)
@@ -41,5 +41,26 @@ class Solution {
         }
         
         return ans;
+    }
+    public List<Integer> rightSideView(TreeNode root) {
+        List<Integer> result = new ArrayList<>();
+        rightView(root, result, 0);
+        return result;
+    }
+
+    private void rightView(TreeNode node, List<Integer> result, int depth) {
+        if (node == null) {
+            return;
+        }
+
+        // If this is the first node we encounter at this depth,
+        // it must be the rightmost one (since we go right first).
+        if (depth == result.size()) {
+            result.add(node.val);
+        }
+
+        // Prioritize right subtree first
+        rightView(node.right, result, depth + 1);
+        rightView(node.left, result, depth + 1);
     }
 }
