@@ -22,7 +22,7 @@ class Solution {
             node = n;
         }
     }
-    public List<List<Integer>> verticalTraversal(TreeNode root) {
+    public List<List<Integer>> verticalTraversal1(TreeNode root) {
         List<List<Integer>> ans = new ArrayList<>();
         TreeMap<Integer,TreeMap<Integer,PriorityQueue<Integer>>> mp = new TreeMap<>();
         Queue<Pair> q = new LinkedList<>();
@@ -58,5 +58,55 @@ class Solution {
             ans.add(temp);
         }
         return ans;
+    }
+    static class Triplet implements Comparable<Triplet>{
+        int col;
+        int row;
+        int val;
+        Triplet(int row, int col, int val){
+            this.col = col;
+            this.row = row;
+            this.val = val;
+        }
+
+        public int compareTo(Triplet t){
+            if(this.col!=t.col){
+                return this.col-t.col;
+            }
+            if(this.row !=t.row){
+                return this.row-t.row;
+            }
+            return this.val-t.val;
+        }
+    }
+
+    
+    public List<List<Integer>> verticalTraversal(TreeNode root) {
+        
+        
+        PriorityQueue<Triplet> pq = new PriorityQueue<>();
+        inorder(root, 0, 0, pq);
+        List<List<Integer>> result = new ArrayList<>();
+        while(!pq.isEmpty()){
+            List<Integer> temp = new ArrayList<>();
+            int currCol = pq.peek().col;
+
+            while(!pq.isEmpty() && pq.peek().col==currCol){
+                temp.add(pq.poll().val);
+            }
+
+            result.add(temp);
+        }
+        
+        return result;
+
+    }
+
+    public void inorder(TreeNode root, int row, int col, PriorityQueue<Triplet> pq){
+        if(root==null) return;
+
+        pq.add(new Triplet(row,col,root.val));
+        inorder(root.left, row+1, col-1, pq);
+        inorder(root.right, row+1, col+1, pq);
     }
 }
