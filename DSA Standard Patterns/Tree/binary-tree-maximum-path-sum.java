@@ -14,19 +14,21 @@
  * }
  */
 class Solution {
-    public int maxDepth(TreeNode root) {
-        if(root==null)return 0;
-        return 1 + Math.max(maxDepth(root.left),maxDepth(root.right));
+    int sum =Integer.MIN_VALUE;
+    public int maxPathSum(TreeNode root) {
+        maxSum(root);
+        return sum;
     }
-    private int height(TreeNode node) {
+    private int maxSum(TreeNode node) {
         if (node == null) return 0;
 
-        int left = height(node.left);
-        int right = height(node.right);
+        int left = Math.max(maxSum(node.left),0);
+        int right = Math.max(maxSum(node.right),0);
 
-        if(Math.abs(left-right)>1)
-        
+        // Update diameter at this node
+        sum = Math.max(sum, node.val+left + right);
+
         // Return height of this subtree
-        return 1 + Math.max(left, right);
+        return node.val+ Math.max(left, right);
     }
 }

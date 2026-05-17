@@ -14,18 +14,22 @@
  * }
  */
 class Solution {
-    public int maxDepth(TreeNode root) {
-        if(root==null)return 0;
-        return 1 + Math.max(maxDepth(root.left),maxDepth(root.right));
+    private int diameter = 0;
+
+    public int diameterOfBinaryTree(TreeNode root) {
+        height(root);
+        return diameter;
     }
+
     private int height(TreeNode node) {
         if (node == null) return 0;
 
         int left = height(node.left);
         int right = height(node.right);
 
-        if(Math.abs(left-right)>1)
-        
+        // Update diameter at this node
+        diameter = Math.max(diameter, left + right);
+
         // Return height of this subtree
         return 1 + Math.max(left, right);
     }
