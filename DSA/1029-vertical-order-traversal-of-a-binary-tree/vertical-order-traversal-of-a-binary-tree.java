@@ -69,14 +69,17 @@ class Solution {
             this.val = val;
         }
 
-        public int compareTo(Triplet t){
-            if(this.col!=t.col){
-                return this.col-t.col;
+        public int compareTo(Triplet t) {
+            // 1️⃣ sort by column
+            if (this.col != t.col) {
+                return this.col - t.col;
             }
-            if(this.row !=t.row){
-                return this.row-t.row;
+            // 2️⃣ if same column → sort by row
+            if (this.row != t.row) {
+                return this.row - t.row;
             }
-            return this.val-t.val;
+            // 3️⃣ if same row → sort by value
+            return this.val - t.val;
         }
     }
 
