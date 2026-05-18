@@ -15,7 +15,7 @@
  */
 
 class Solution {
-    public boolean isValidBST(TreeNode root) {
+    public boolean isValidBST1(TreeNode root) {
         ArrayList<Integer> list = new ArrayList<>();
         getInOrder(root,list); 
         if(list.size()==1)
@@ -34,11 +34,11 @@ class Solution {
         list.add(node.val);              // Visit Root
         getInOrder(node.right,list);        // Traverse Right
     }
-    public boolean isValidBST1(TreeNode root) {
-        return valid(root,Integer.MIN_VALUE,Integer.MAX_VALUE);
+    public boolean isValidBST(TreeNode root) {
+        return valid(root,Long.MIN_VALUE,Long.MAX_VALUE);
     }
 
-    public boolean valid(TreeNode root, int min, int max){
+    public boolean valid(TreeNode root, long min, long max){
         if(root == null){
             return true;
         }
