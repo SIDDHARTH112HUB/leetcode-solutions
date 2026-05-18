@@ -15,7 +15,7 @@
  */
 class Solution {
     int ans;
-    int t;
+    int t=Integer.MAX_VALUE;
     public int kthSmallest(TreeNode root, int k) {
         t=k;
         getInOrder(root);
@@ -23,11 +23,14 @@ class Solution {
     }
     void getInOrder(TreeNode node) {
         if (node == null) return;
+        if (t< 0) return;
         
         getInOrder(node.left);
         t--;         // Traverse Left
         if(t==0)
-        ans = node.val;          // Visit Root
+        {ans = node.val;
+            return;
+        }          // Visit Root
         getInOrder(node.right);        // Traverse Right
     }
 }
