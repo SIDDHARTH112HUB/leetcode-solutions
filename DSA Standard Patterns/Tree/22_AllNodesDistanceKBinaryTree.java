@@ -1,12 +1,5 @@
 class Solution {
-    class Pair {
-        TreeNode par;  // actual tree node
-        TreeNode node;  // actual tree node
-        public Pair(TreeNode root, TreeNode baap) {
-            node = root;
-            par = baap;
-        }
-    }
+   
     public List<Integer> distanceK(TreeNode root, TreeNode target, int k) {
         Queue<TreeNode> q = new LinkedList<>();
         Map<TreeNode,TreeNode> mp = new HashMap<>();
@@ -28,7 +21,6 @@ class Solution {
             }
         }
         q.add(target);
-
         visited.add(target);
         while(k>0 && !q.isEmpty()){
             int n=q.size();
