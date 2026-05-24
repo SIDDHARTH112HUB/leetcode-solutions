@@ -14,7 +14,7 @@
  * }
  */
 class Solution {
-    public TreeNode reverseOddLevels(TreeNode root) {
+    public TreeNode reverseOddLevels1(TreeNode root) {
         List<List<TreeNode>> temp = levelOrderGroups(root);
         for(int i=0;i<temp.size()-1;i++){
             if (i % 2 == 0) { // reverse odd rows (1, 3, 5...)
@@ -52,5 +52,24 @@ class Solution {
             result.add(currentLevelList);
         }
         return result;
+    }
+    public void solve(TreeNode root1,TreeNode root2,int level){
+        if(root1==null||root2==null){
+            return;
+        }
+        if(level%2!=0){
+            int temp=root1.val;
+            root1.val=root2.val;
+            root2.val=temp;
+        }
+        solve(root1.left,root2.right,level+1);
+        solve(root1.right,root2.left,level+1);
+    }
+    public TreeNode reverseOddLevels(TreeNode root) {
+        if(root==null){
+            return null;
+        }
+        solve(root.left,root.right,1);
+        return root;
     }
 }
