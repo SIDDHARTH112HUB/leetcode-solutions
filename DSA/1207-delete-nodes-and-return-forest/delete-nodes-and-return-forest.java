@@ -14,7 +14,7 @@
  * }
  */
 class Solution {
-    public List<TreeNode> delNodes(TreeNode root, int[] to_delete) {
+    public List<TreeNode> delNodes1(TreeNode root, int[] to_delete) {
         List<TreeNode> ans = new ArrayList<>();
         Set<Integer> set = new HashSet<>();
         for (int x : to_delete) {
@@ -54,5 +54,30 @@ class Solution {
             else if(par.right!=null &&  par.right.val==root.val)
             par.right =null;
         }
+    }
+
+
+
+    //M-2
+
+    public List<TreeNode> delNodes(TreeNode root, int[] to_delete) {
+        List<TreeNode> ans = new ArrayList<>();
+        Set<Integer> set = new HashSet<>();
+        for (int x : to_delete) set.add(x);
+
+        dfs(root, true, set, ans);
+        return ans;
+    }
+
+    private TreeNode dfs(TreeNode node, boolean isRoot, Set<Integer> set, List<TreeNode> ans) {
+        if (node == null) return null;
+
+        boolean deleted = set.contains(node.val);
+        if (isRoot && !deleted) ans.add(node);
+
+        node.left = dfs(node.left, deleted, set, ans);
+        node.right = dfs(node.right, deleted, set, ans);
+
+        return deleted ? null : node;
     }
 }
