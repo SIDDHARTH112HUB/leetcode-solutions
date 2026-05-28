@@ -14,7 +14,7 @@
  * }
  */
 class Solution {
-    public int findBottomLeftValue(TreeNode root) {
+    public int findBottomLeftValue1(TreeNode root) {
         if (root == null) return -1;
         int ans = root.val;
 
@@ -38,5 +38,20 @@ class Solution {
     
         }
         return ans;
+    }
+    int maxDepth=-1,value=0;
+    public void dfs(TreeNode root,int level){
+        if(root==null) return ;
+        if(level>maxDepth){
+            maxDepth=level;
+            value=root.val;
+        }
+        dfs(root.left,level+1);
+        dfs(root.right,level+1);
+
+    }
+    public int findBottomLeftValue(TreeNode root) {
+        dfs(root,0);
+        return value;
     }
 }
