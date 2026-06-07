@@ -60,4 +60,27 @@ class Solution {
             curr = curr.right;
         }
     }
+    List<TreeNode> pre;
+    public void flatten(TreeNode root) {
+        pre = new ArrayList<>();
+        if(root==null)
+        return;
+        printPreOrder(root);
+        int i;
+        for (i=0;i<pre.size()-1;i++){
+            TreeNode t = pre.get(i);
+            t.left=null;
+            t.right = pre.get(i+1);
+
+        }
+        pre.get(i).left=null;
+        pre.get(i).right=null;
+    }
+    void printPreOrder(TreeNode node) {
+        if (node == null) return;
+
+        pre.add(node); // Visit Root
+        printPreOrder(node.left);         // Traverse Left
+        printPreOrder(node.right);        // Traverse Right
+    }
 }
