@@ -14,7 +14,7 @@
  * }
  */
 class Solution {
-    public TreeNode bstFromPreorder(int[] preorder) {
+    public TreeNode bstFromPreorder1(int[] preorder) {
         int []in = Arrays.copyOf(preorder, preorder.length);
         
         // Sort the array in ascending order
@@ -40,5 +40,17 @@ class Solution {
         root.right = buildTree(pre,preStart+numLeft+1, preEnd,in,inRoot+1,inEnd,inMap);
 
         return root;
+    }
+    int i=0;
+    public TreeNode bstFromPreorder(int[] pre) {
+        return  bstFromPreorder(pre,Integer.MAX_VALUE);
+    }
+    public TreeNode bstFromPreorder(int[] pre, int upBound) {
+        if(i>=pre.length || pre[i]>upBound) return null;
+
+        TreeNode root = new TreeNode(pre[i++]);
+        root.left = bstFromPreorder(pre,root.val);
+        root.right = bstFromPreorder(pre,upBound);
+        return  root;
     }
 }
