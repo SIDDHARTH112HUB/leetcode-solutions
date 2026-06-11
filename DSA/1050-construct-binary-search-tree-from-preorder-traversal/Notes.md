@@ -1,1 +1,1 @@
-<h2>construct-binary-search-tree-from-preorder-traversal Notes</h2><hr>[ Time taken: 7d 14hrs 33m 32s ]
+<h2>construct-binary-search-tree-from-preorder-traversal Notes</h2><hr>[ Time taken: 11d 6hrs 23m 9s ]

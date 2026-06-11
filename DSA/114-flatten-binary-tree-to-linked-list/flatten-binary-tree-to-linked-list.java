@@ -15,6 +15,7 @@
  */
 class Solution {
     TreeNode prev = null;
+    List<TreeNode> pre;
     public void flatten1(TreeNode root) {
         if(root==null)
         return;
@@ -26,7 +27,7 @@ class Solution {
         root.left = null;
         prev = root;
     }
-     public void flatten(TreeNode root) {
+     public void flatten2(TreeNode root) {
         TreeNode curr = root;
         while (curr != null) {
             if (curr.left != null) {
@@ -40,5 +41,27 @@ class Solution {
             }
             curr = curr.right;
         }
+    }
+    public void flatten(TreeNode root) {
+        pre = new ArrayList<>();
+        if(root==null)
+        return;
+        printPreOrder(root);
+        int i;
+        for (i=0;i<pre.size()-1;i++){
+            TreeNode t = pre.get(i);
+            t.left=null;
+            t.right = pre.get(i+1);
+
+        }
+        pre.get(i).left=null;
+        pre.get(i).right=null;
+    }
+    void printPreOrder(TreeNode node) {
+        if (node == null) return;
+
+        pre.add(node); // Visit Root
+        printPreOrder(node.left);         // Traverse Left
+        printPreOrder(node.right);        // Traverse Right
     }
 }

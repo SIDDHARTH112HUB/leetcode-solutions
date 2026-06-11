@@ -16,7 +16,7 @@
 class Solution {
     int ans;
     int t=Integer.MAX_VALUE;
-    public int kthSmallest(TreeNode root, int k) {
+    public int kthSmallest1(TreeNode root, int k) {
         t=k;
         getInOrder(root);
         return ans;
@@ -32,5 +32,44 @@ class Solution {
             return;
         }          // Visit Root
         getInOrder(node.right);        // Traverse Right
+    }
+    public int kthSmallest(TreeNode root, int k) {
+        t=k;
+        morrisInorder(root);
+        return ans;
+    }
+    public void morrisInorder(TreeNode root) {
+        TreeNode curr = root;
+        while (curr != null) {
+            if (curr.left == null) {
+                t--;
+                if(t==0)
+                {
+                    ans=curr.val;
+                    return;
+                }
+                //System.out.print(curr.val + " ");
+                curr = curr.right;
+            } else {
+                TreeNode prev = curr.left;
+                while (prev.right != null && prev.right != curr) {
+                    prev = prev.right;
+                }
+                if (prev.right == null) {
+                    prev.right = curr; // create thread
+                    curr = curr.left;
+                } else {
+                    prev.right = null; // remove thread
+                    t--;
+                    if(t==0)
+                    {
+                        ans=curr.val;
+                        return;
+                    }
+                    //System.out.print(curr.val + " ");
+                    curr = curr.right;
+                }
+            }
+        }
     }
 }
