@@ -36,6 +36,34 @@ class BSTIterator {
     public boolean hasNext() {
         return i<in.size();
     }
+
+
+
+
+
+
+    Stack<TreeNode> st = new Stack<>();
+    public BSTIterator(TreeNode root) {
+        st = new Stack<>();
+        fillLeft(root);
+    }
+    void fillLeft(TreeNode node) {
+        if (node == null) return;
+        while(node!=null){
+            st.push(node);
+            node = node.left;
+        }        // Traverse Right
+    }
+    public int next() {
+        TreeNode node = st.pop();
+        fillLeft(node.right);
+        return node.val;
+         
+    }
+    
+    public boolean hasNext() {
+        return !st.empty();
+    }
 }
 
 /**
