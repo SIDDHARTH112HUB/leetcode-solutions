@@ -10,47 +10,40 @@
 public class Codec {
 
     // Encodes a tree to a single string.
+    StringBuilder sb;
     public String serialize(TreeNode root) {
         if(root==null)
         return "";
-        StringBuilder sb = new StringBuilder();
-        Queue<TreeNode> q = new LinkedList<>();
-        q.add(root);
-        while(!q.isEmpty()){
-            TreeNode temp = q.poll();
-            if(temp==null){
-                sb.append("n ");
-                continue;
-            }
-            else{
-                sb.append(temp.val+" ");
-            }
-            q.add(temp.left);
-            q.add(temp.right);
-        } 
+        sb = new StringBuilder();
+        getPreOrder(root);
         return sb.toString();
     }
+    void getPreOrder(TreeNode node) {
+        if (node == null) return;
 
+        sb.append(node.val + " "); // Visit Root
+        getPreOrder(node.left);         // Traverse Left
+        getPreOrder(node.right);        // Traverse Right
+    }
     // Decodes your encoded data to tree.
     public TreeNode deserialize(String data) {
         if(data=="")
         return null;
-        String []v = data.split(" ");
-        TreeNode root = new TreeNode(Integer.parseInt(v[0]));
-        Queue<TreeNode> q = new LinkedList<>();
-        q.add(root);
-        for (int i=1;i<v.length;i++){
-            TreeNode temp = q.poll();
-            if(!v[i].equals("n")){
-                temp.left = new TreeNode(Integer.parseInt(v[i]));
-                q.add(temp.left);
-            }
-            if(!v[++i].equals("n")){
-                temp.right = new TreeNode(Integer.parseInt(v[i]));
-                q.add(temp.right);
-            }
-        }
-        return root;
+        int[] pre = Arrays.stream(data.split("\\s+"))
+                               .mapToInt(Integer::parseInt)
+                               .toArray();
+        i=0;
+        return bstFromPreorder(pre, Integer.MAX_VALUE);
+    }
+    int i=0;
+    
+    public TreeNode bstFromPreorder(int[] pre, int upBound) {
+        if(i>=pre.length || pre[i]>upBound) return null;
+
+        TreeNode root = new TreeNode(pre[i++]);
+        root.left = bstFromPreorder(pre,root.val);
+        root.right = bstFromPreorder(pre,upBound);
+        return  root;
     }
 }
 
