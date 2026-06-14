@@ -29,10 +29,7 @@ class Solution {
         return;
 
         inorder(root.left);
-        //System.out.print(root.val);
-        //System.out.print(" ");
         if(prev!=null){
-            //System.out.print(prev.val);
             if(prev.val>root.val){
                 assign(root);
             }
@@ -41,7 +38,6 @@ class Solution {
         else{
             prev = root;
         }
-        //System.out.println();
         inorder(root.right);
     }
     public void assign(TreeNode root){
