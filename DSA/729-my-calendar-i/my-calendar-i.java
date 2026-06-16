@@ -8,17 +8,38 @@ class MyCalendar {
         }
     }
     List<Pair> cal;
-    public MyCalendar() {
+    public void MyCalendar1() {
         cal = new ArrayList<>();
     }
     
-    public boolean book(int st, int end) {
+    public boolean book1(int st, int end) {
         for(Pair p:cal){
             if (p.st < end && st < p.end) {
             return false;
         }
         }
         cal.add(new Pair(st,end));
+        return true;
+    }
+
+    TreeMap<Integer, Integer> map;
+
+    public MyCalendar() {
+        map = new TreeMap<>();
+    }
+    
+    public boolean book(int startTime, int endTime) {
+        Integer prevStart = map.floorKey(startTime);
+        if (prevStart != null && map.get(prevStart) > startTime) {
+            return false;
+        }
+
+        Integer nextStart = map.ceilingKey(startTime);
+        if (nextStart != null && nextStart < endTime) {
+            return false;
+        }
+
+        map.put(startTime, endTime);
         return true;
     }
 }
