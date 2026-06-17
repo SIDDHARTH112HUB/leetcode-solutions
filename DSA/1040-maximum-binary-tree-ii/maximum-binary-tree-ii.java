@@ -1,3 +1,18 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
 class Solution {
     List<Integer> num;
     public TreeNode insertIntoMaxTree1(TreeNode root, int val) {
@@ -31,7 +46,7 @@ class Solution {
 
         return root;
     }
-    public TreeNode insertIntoMaxTree(TreeNode root, int val) {
+    public TreeNode insertIntoMaxTree2(TreeNode root, int val) {
         if(root == null)
             return new TreeNode(val);
 
@@ -42,5 +57,16 @@ class Solution {
 
         return root;
 
+    }
+    public TreeNode insertIntoMaxTree(TreeNode root, int val) {
+        if (root == null || val > root.val) {
+            TreeNode node = new TreeNode(val);
+            node.left = root;
+            return node;
+        }
+
+        root.right = insertIntoMaxTree(root.right, val);
+
+        return root;
     }
 }
