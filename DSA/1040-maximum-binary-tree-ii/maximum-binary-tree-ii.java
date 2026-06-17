@@ -1,6 +1,6 @@
 class Solution {
     List<Integer> num;
-    public TreeNode insertIntoMaxTree(TreeNode root, int val) {
+    public TreeNode insertIntoMaxTree1(TreeNode root, int val) {
         num = new ArrayList<>();
         printInOrder(root);
         num.add(val);
@@ -30,5 +30,17 @@ class Solution {
         root.right = constructMaximumBinaryTree(maxi+1,right);
 
         return root;
+    }
+    public TreeNode insertIntoMaxTree(TreeNode root, int val) {
+        if(root == null)
+            return new TreeNode(val);
+
+        if(val > root.val)
+            return new TreeNode(val, root, null);
+
+        root.right = insertIntoMaxTree(root.right, val);
+
+        return root;
+
     }
 }
