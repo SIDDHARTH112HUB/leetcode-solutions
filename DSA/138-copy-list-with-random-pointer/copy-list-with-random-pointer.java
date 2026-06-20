@@ -14,7 +14,7 @@ class Node {
 */
 
 class Solution {
-    public Node copyRandomList(Node head) {
+    public Node copyRandomList1(Node head) {
         if (head == null) return null;
 
         Map<Node, Node> mp = new HashMap<>();
@@ -35,6 +35,42 @@ class Solution {
             }
 
             head = head.next;
+        }
+
+        return dummy.next;
+    }
+    public Node copyRandomList(Node head) {
+        if (head == null) return null;
+
+        // Step 1: Interleave cloned nodes
+        Node ptr = head;
+        while (ptr != null) {
+            Node newNode = new Node(ptr.val);
+            newNode.next = ptr.next;
+            ptr.next = newNode;
+            ptr = newNode.next;
+        }
+
+        // Step 2: Assign random pointers
+        ptr = head;
+        while (ptr != null) {
+            if (ptr.random != null) {
+                ptr.next.random = ptr.random.next;
+            }
+            ptr = ptr.next.next;
+        }
+
+        // Step 3: Separate the lists
+        Node dummy = new Node(-1);
+        Node copyPtr = dummy;
+        ptr = head;
+        while (ptr != null) {
+            Node cloned = ptr.next;
+            copyPtr.next = cloned;
+            copyPtr = cloned;
+
+            ptr.next = cloned.next; // restore original list
+            ptr = ptr.next;
         }
 
         return dummy.next;
