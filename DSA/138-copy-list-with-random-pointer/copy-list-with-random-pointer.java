@@ -17,26 +17,23 @@ class Solution {
     public Node copyRandomList(Node head) {
         if (head == null) return null;
 
-        Map<Node, Node> mp = new HashMap<>();
-        Node dummy = new Node(-1);
-        Node curr = dummy;
+        Map<Node, Node> map = new HashMap<>();
 
-        while (head != null) {
-            Node newNode = mp.getOrDefault(head, new Node(head.val));
-            mp.put(head, newNode);
-
-            curr.next = newNode;
-            curr = curr.next;
-
-            if (head.random != null) {
-                Node randomNode = mp.getOrDefault(head.random, new Node(head.random.val));
-                mp.put(head.random, randomNode);
-                newNode.random = randomNode;
-            }
-
-            head = head.next;
+        // First pass: create all nodes
+        Node ptr = head;
+        while (ptr != null) {
+            map.put(ptr, new Node(ptr.val));
+            ptr = ptr.next;
         }
 
-        return dummy.next;
+        // Second pass: assign next and random pointers
+        ptr = head;
+        while (ptr != null) {
+            map.get(ptr).next = map.get(ptr.next);
+            map.get(ptr).random = map.get(ptr.random);
+            ptr = ptr.next;
+        }
+
+        return map.get(head);
     }
 }
