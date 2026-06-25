@@ -1,5 +1,5 @@
 class Solution {
-    public int[] findDegrees(int[][] matrix) {
+    public int[] findDegrees1(int[][] matrix) {
         Map<Integer, Set<Integer>>mp = buildTree(matrix);
         int [] ans = new int[matrix.length];
         for(int i=0;i<ans.length;i++){
@@ -26,5 +26,17 @@ class Solution {
         }
 
         return adj;
+    }
+    public int[] findDegrees(int[][] matrix) {
+      int[]  degree=new int[matrix.length];  
+      for(int i =0;i<matrix.length;i++){
+        for(int j=i;j<matrix.length;j++){
+            if(matrix[i][j]==1){
+                degree[i]++;
+                degree[j]++;
+            }
+        }
+      }
+      return degree;
     }
 }
