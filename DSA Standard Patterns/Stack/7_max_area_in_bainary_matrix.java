@@ -1,4 +1,38 @@
-import java.util.*;
+class Solution {
+    public int maximalRectangle(char[][] m) {
+        int rows = m.length;
+        int cols = m[0].length;
+        int maxArea = 0;
+
+        // Try every possible rectangle
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                if (m[i][j] == '1') {
+                    // Expand rectangle from (i,j)
+                    for (int k = i; k < rows; k++) {
+                        for (int l = j; l < cols; l++) {
+                            if (isAllOnes(m, i, j, k, l)) {
+                                int area = (k - i + 1) * (l - j + 1);
+                                maxArea = Math.max(maxArea, area);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return maxArea;
+    }
+
+    // Helper to check if rectangle is all '1'
+    private boolean isAllOnes(char[][] m, int i, int j, int k, int l) {
+        for (int r = i; r <= k; r++) {
+            for (int c = j; c <= l; c++) {
+                if (m[r][c] == '0') return false;
+            }
+        }
+        return true;
+    }
+}
 
 class Solution {
     public int maximalRectangle(char[][] m) {
