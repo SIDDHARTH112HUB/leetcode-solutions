@@ -15,46 +15,85 @@
  *     public List<NestedInteger> getList();
  * }
  */
+// public class NestedIterator1 implements Iterator<Integer> {
+//     int n =0;
+//     Queue<Integer> q;
+//     public NestedIterator1(List<NestedInteger> nestedList) {
+//         q = new LinkedList<>();
+//         for(NestedInteger s:nestedList){
+//             if(s.isInteger()){
+//                 q.add(s.getInteger());
+//             }
+//             else{
+//                 List<Integer> l = getIntegers(s);
+//                 q.addAll(l);
+//             }
+//         }
+//     }
+//     List<Integer> getIntegers(NestedInteger sl){
+//         List<NestedInteger> list = sl.getList();
+//         List<Integer> ls= new ArrayList<>(); 
+//         for(NestedInteger s:list){
+//             if(s.isInteger()){
+//                 ls.add(s.getInteger());
+//             }
+//             else{
+//                 List<Integer> lt = getIntegers(s);
+//                 ls.addAll(lt);
+//             }
+//         }
+//         return ls;
+//     }
+//     @Override
+//     public Integer next() {
+//         return q.poll();   
+//     }
+
+//     @Override
+//     public boolean hasNext() {
+//         return !q.isEmpty();
+//     }
+// }
+
 public class NestedIterator implements Iterator<Integer> {
-    int n =0;
-    Queue<Integer> q;
+    private List<Integer> integers = new ArrayList<>();
+    private int index;
+
     public NestedIterator(List<NestedInteger> nestedList) {
-        q = new LinkedList<>();
-        for(NestedInteger s:nestedList){
-            if(s.isInteger()){
-                q.add(s.getInteger());
-            }
-            else{
-                List<Integer> l = getIntegers(s);
-                q.addAll(l);
+        flatternList(nestedList);
+        index = 0;
+    }
+
+    private void flatternList (List<NestedInteger> nestedList) {
+        for (NestedInteger ni : nestedList) {
+            if (ni.isInteger()) {
+                integers.add(ni.getInteger());
+            } else {
+                flatternList(ni.getList());
             }
         }
     }
-    List<Integer> getIntegers(NestedInteger sl){
-        List<NestedInteger> list = sl.getList();
-        List<Integer> ls= new ArrayList<>(); 
-        for(NestedInteger s:list){
-            if(s.isInteger()){
-                ls.add(s.getInteger());
-            }
-            else{
-                List<Integer> lt = getIntegers(s);
-                ls.addAll(lt);
-            }
-        }
-        return ls;
-    }
+
     @Override
     public Integer next() {
-        return q.poll();   
+        if (hasNext()) {
+            int ans = integers.get(index);
+            index++;
+            return ans;
+        } else {
+            throw new RuntimeException("no next");
+        }
     }
 
     @Override
     public boolean hasNext() {
-        return !q.isEmpty();
+        if (index >= integers.size()) {
+            return false;
+        } else {
+            return true;
+        }
     }
 }
-
 /**
  * Your NestedIterator object will be instantiated and called as such:
  * NestedIterator i = new NestedIterator(nestedList);
