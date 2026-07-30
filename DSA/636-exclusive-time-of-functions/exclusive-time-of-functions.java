@@ -1,27 +1,54 @@
 class Solution {
+
     public int[] exclusiveTime(int n, List<String> logs) {
-        int []ans = new int[n];
+
+        // Stores exclusive execution time for each function
+        int[] ans = new int[n];
+
+        // Keeps track of currently executing functions
         Stack<Integer> st = new Stack<>();
+
+        // Current timestamp from which active function is running
         int ct = 0;
-        for(String s:logs ){
-            String []l = s.split(":");
-            int t= Integer.parseInt(l[2]);
-            int p= Integer.parseInt(l[0]);
+
+        for (String s : logs) {
+
+            // Split log into id, state and timestamp
+            String[] l = s.split(":");
+
+            int functionId = Integer.parseInt(l[0]);
             String state = l[1];
-            System.out.println(state);
-            if(state.equals("start")){
-                if(!st.empty()){
-                    ans[st.peek()] +=t-ct;
+            int time = Integer.parseInt(l[2]);
+
+            // Function starts
+            if (state.equals("start")) {
+
+                // Previous function executes until this timestamp
+                if (!st.empty()) {
+                    ans[st.peek()] += time - ct;
                 }
-                st.push(p);
-                ct =t;
+
+                // New function becomes active
+                st.push(functionId);
+
+                // Update current time
+                ct = time;
             }
-            else{
-                ans[p] +=t-ct+1;
+
+            // Function ends
+            else {
+
+                // End timestamp is inclusive (+1)
+                ans[functionId] += time - ct + 1;
+
+                // Remove completed function
                 st.pop();
-                ct =t+1;
+
+                // Next execution begins after current timestamp
+                ct = time + 1;
             }
         }
+
         return ans;
     }
 }
