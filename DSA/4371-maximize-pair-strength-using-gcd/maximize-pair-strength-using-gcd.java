@@ -3,18 +3,9 @@ class Solution {
         long ans = 0;
         for(int i=0;i<nums.length;i++){
             for(int j=i+1;j<nums.length;j++){
-                long a = nums[i];
-                long b = nums[j];
-                long g = gcd(nums[i],nums[j]);
-                //System.out.println(g);
-                //System.out.println(a);
-                //System.out.println(b);
-                long c = a*b;
-                long d= g*g;
-                //System.out.println(c);
-                //System.out.println(d);
-
-                ans = Math.max(ans, c/d );
+                int g = gcd(nums[i],nums[j]);
+                long t = 1;
+                ans = Math.max(ans, (t*nums[i]*nums[j])/(t*g*g) );
             }
         }
         return ans;
