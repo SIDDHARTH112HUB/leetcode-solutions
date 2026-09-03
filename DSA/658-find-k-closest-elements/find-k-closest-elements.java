@@ -1,28 +1,35 @@
-class Pair{
+class Pair {
     int key;
     int num;
-    public Pair(int k, int n){
-        key= k;
+    public Pair(int k, int n) {
+        key = k;
         num = n;
     }
 }
+
 class Solution {
     public List<Integer> findClosestElements(int[] arr, int k, int x) {
-        PriorityQueue<Pair> pq = new PriorityQueue<>(Comparator.comparingInt((Pair p) -> p.key)
-              .thenComparingInt(p -> p.num)
-              .reversed());
-        for (int i:arr) {
-            pq.add(new Pair(Math.abs(i-x),i));
-            while(pq.size()>k){
+        // Max heap: farthest distances at the top. Ties broken by larger number at the top.
+        PriorityQueue<Pair> pq = new PriorityQueue<>(
+            Comparator.comparingInt((Pair p) -> p.key)
+                      .thenComparingInt(p -> p.num)
+                      .reversed()
+        );
+        
+        for (int i : arr) {
+            pq.add(new Pair(Math.abs(i - x), i));
+            // Just need 'if' since we add one at a time
+            if (pq.size() > k) { 
                 pq.poll();
-                //System.out.println(pq.poll().num);
             }
         }
+        
         List<Integer> ans = new ArrayList<>();
         while (!pq.isEmpty()) {
-            Pair p = pq.poll();
-            ans.add(p.num);
+            ans.add(pq.poll().num);
         }
+        
+        // Problem requires the result to be sorted in ascending order
         Collections.sort(ans);
         return ans;
     }
