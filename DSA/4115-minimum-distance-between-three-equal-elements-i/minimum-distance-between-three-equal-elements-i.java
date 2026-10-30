@@ -1,38 +1,20 @@
 class Solution {
     public int minimumDistance(int[] nums) {
-        List<List<Integer>> matrix = new ArrayList<>();
-
-        // 2. Initialize the 100 rows with individual ArrayList instances
-        for (int i = 0; i <= 100; i++) {
-            matrix.add(new ArrayList<>());
-        }
-
-        for(int i=0;i<nums.length;i++){
-            matrix.get(nums[i]).add(i);
-        }
-        int ans = Integer.MAX_VALUE;
-        boolean found = false;
-        for(int i=1;i<=100;i++){
-            List<Integer> l = matrix.get(i);
-            if(l.size()>=3){
-                found =true;
-                ans = Math.min(ans,getValue(l));
-            }
-        }
-        if(found==false)
-        return -1;
-        return ans;
-
-    }
-    int getValue(List<Integer> l){
-        int ans = Integer.MAX_VALUE;
-        for(int i=0;i<l.size();i++){
-            for(int j =i+1;j<l.size();j++){
-                for(int k =j+1;k<l.size();k++){
-                    ans = Math.min(ans, Math.abs(l.get(i)-l.get(k))+Math.abs(l.get(i)-l.get(j))+Math.abs(l.get(k)-l.get(j)) );
+            int minDistance = Integer.MAX_VALUE;
+            for (int i = 0; i < nums.length - 2; i++) {
+                for (int j = i + 1; j < nums.length - 1; j++) {
+                    if (nums[i] != nums[j]) {
+                        continue;
+                    }
+                    for (int k = j + 1; k < nums.length; k++) {
+                        if (nums[k] != nums[i]) {
+                            continue;
+                        }
+                        minDistance = Math.min(k - j + (k - i) + (j - i), minDistance);
+                        break;
+                    }
                 }
             }
+            return minDistance == Integer.MAX_VALUE ? -1 : minDistance;
         }
-        return ans;
-    }
 }
