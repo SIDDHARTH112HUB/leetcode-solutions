@@ -1,20 +1,14 @@
 class Solution {
     public int countConsistent(int[] nums) {
-        int ans =0;
         int n = nums.length;
-
+        int ans = 0;
         for (int i = 0; i < n; i++) {
+            int a = nums[i];
+            int m = nums[i];
             for (int j = i; j < n; j++) {
-                int min = nums[i];
-                int and = nums[i];
-
-                for (int k = i; k <= j; k++)
-                {
-                    min = Math.min(nums[k],min);
-                    and = and & nums[k];
-                }
-                if(min == and)
-                ans++;
+                a &= nums[j];
+                m = Math.min(m, nums[j]);
+                if (a == m) ans++;
             }
         }
         return ans;
