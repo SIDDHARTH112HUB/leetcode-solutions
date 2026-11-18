@@ -1,8 +1,27 @@
 class Solution {
     int [][]dp ;
     public boolean checkValidString(String s) {
-        dp =  new int [101][101];
-        return isValid(s,0,0);
+        int min=0,max=0;
+        for(int i=0;i<s.length();i++){
+            char c = s.charAt(i);
+            if(c=='('){
+                min ++;
+                max ++;
+            }
+            else if(c==')'){
+                min--;
+                max--;
+            }
+            else{
+                min-=1;
+                max++;
+            }
+            if(max<0)
+            return false;
+            if(min<0)
+            min=0;
+        }
+        return min==0;
     }
     boolean isValid(String s, int i, int cnt){
         if(cnt<0)
